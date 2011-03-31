@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+# The mpower command line utility
+
+require 'mpower'
+require 'mpower/exec'
+
+Mpower::Exec.new

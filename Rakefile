@@ -20,7 +20,7 @@ Jeweler::Tasks.new do |gem|
   gem.email = "aaron@gc4.co.uk"
   gem.authors = ["Aaron Russell"]
   gem.files = Dir.glob('lib/**/*.rb')
-  gem.executables = ["shemail"]
+  gem.executables = ["mpower"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
   gem.add_runtime_dependency 'premailer'
