@@ -1,4 +1,5 @@
 require 'premailer'
+require 'tidy_ffi'
 
 module Mpower
   
@@ -51,7 +52,8 @@ module Mpower
         input   = File.open(src, 'r') { |f| f.read }
         premailer = Premailer.new(Mpower::Filter.new(input).run, config.premailer.merge(:with_html_string => true))
         File.open(output_for(src), 'w') do |out|
-          out.write premailer.to_inline_css
+          html = premailer.to_inline_css
+          out.write TidyFFI::Tidy.new(html, :indent => 1, :tidy_mark => 0, :char_encoding => 'latin1').clean
         end
         File.open(text_output_for(src), 'w') do |out|
           out.write premailer.to_plain_text

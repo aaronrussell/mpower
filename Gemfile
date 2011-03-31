@@ -5,6 +5,7 @@ gem "premailer"
 gem "slop"
 gem "erubis"
 gem "fssm"
+gem "tidy_ffi"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
