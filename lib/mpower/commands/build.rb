@@ -9,7 +9,7 @@ module Mpower::Commands
 mpower:
   source_path:  "source"
   output_path:  "output"
-  asset_path:   "images"
+  assets_path:  "images"
 
 # Premailer config options
 premailer:
@@ -23,7 +23,7 @@ EOS
 <html>
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <title>#{project_name}.html</title>
+  <title>{{project_name}}.html</title>
   <style type="text/css" media="screen">
     body { margin:0; padding:0; }
     img { display:block; }
@@ -60,8 +60,9 @@ EOS
     end
     
     def create_project_structure
-      FileUtils.mkdir_p(source_path) unless File.exist?(source_path)
-      FileUtils.mkdir_p(output_path) unless File.exist?(output_path)
+      [source_path, assets_path, output_path].each do |path|
+        FileUtils.mkdir_p(path) unless File.exist?(path)
+      end
     end
     
     def create_config_file
@@ -78,7 +79,7 @@ EOS
         puts "Default HTML file already exists..."
       else
         puts "Creating default HTML file..."
-        File.open(html_file, 'w') { |io| io.write(DEFAULT_HTML) }
+        File.open(html_file, 'w') { |io| io.write(DEFAULT_HTML.gsub('{{project_name}}', project_name)) }
       end
     end
     

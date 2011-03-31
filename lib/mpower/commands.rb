@@ -20,6 +20,10 @@ module Mpower::Commands
       config.output_path
     end
     
+    def assets_path
+      config.assets_path
+    end
+    
     def compiler
       @compiler ||= Mpower::Compiler.new(config)
     end
