@@ -2,6 +2,8 @@ module Mpower::Helpers
   
   module Content
     
+    CAPTURES = {}
+        
     def render(path, params = {})
       file_name = File.basename(path)
       input = File.open(path.gsub(%r{#{file_name}$}, "_#{file_name}.html")) { |f| f.read }
@@ -14,6 +16,14 @@ module Mpower::Helpers
       buf = eval('_buf', block.binding)
       buf << result
       result
+    end
+    
+    def content_for(name, &block)
+      if block_given? # Set content
+        CAPTURES[name.to_sym] = capture(&block)
+      else # Get content
+        CAPTURES[name.to_sym]
+      end
     end
     
     private
