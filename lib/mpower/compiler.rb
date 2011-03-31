@@ -26,8 +26,16 @@ module Mpower
       source_files.map { |src| output_for(src) }
     end
     
+    def assets_files
+      Dir.glob File.join(config.assets_path, '*')
+    end
+    
     def output_for(src)
       File.join(config.output_path, File.basename(src))
+    end
+    
+    def asset_ouput(src)
+      File.join(config.output_path, File.basename(config.assets_path), File.basename(src))
     end
     
     def text_output_for(src)
@@ -37,6 +45,8 @@ module Mpower
     
     def compile!
       FileUtils.cd config.source_path
+      # TODO - make more efficient by checking mtimes
+      FileUtils.cp_r(config.assets_path, output_for(config.assets_path))
       source_html.each do |src|
         input   = File.open(src, 'r') { |f| f.read }
         premailer = Premailer.new(Mpower::Filter.new(input).run, config.premailer.merge(:with_html_string => true))
