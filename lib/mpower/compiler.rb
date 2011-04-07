@@ -1,5 +1,4 @@
 require 'premailer'
-require 'tidy_ffi'
 
 module Mpower
   
@@ -7,8 +6,9 @@ module Mpower
     
     attr_reader :config
     
-    def initialize(config)
-      @config = config
+    def initialize(conf)
+      require 'tidy_ffi' if conf.use_html_tidy?
+      @config = conf
     end
     
     def source_html
@@ -46,18 +46,32 @@ module Mpower
     
     def compile!
       FileUtils.cd config.source_path
+      copy_static_assets
+      source_html.each do |src|
+        begin
+          input       = File.open(src, 'r') { |f| f.read }
+          @premailer  = Premailer.new(Mpower::Filter.new(input).run, config.premailer.merge(:with_html_string => true))
+          write_output(src)
+        rescue
+          puts "Error detected in '#{src}'"
+        end
+      end
+    end
+    
+    private
+    
+    def copy_static_assets
       # TODO - make more efficient by checking mtimes
       FileUtils.cp_r(config.assets_path, output_for(config.assets_path))
-      source_html.each do |src|
-        input   = File.open(src, 'r') { |f| f.read }
-        premailer = Premailer.new(Mpower::Filter.new(input).run, config.premailer.merge(:with_html_string => true))
-        File.open(output_for(src), 'w') do |out|
-          html = premailer.to_inline_css
-          out.write TidyFFI::Tidy.new(html, :indent => 1, :tidy_mark => 0, :char_encoding => 'latin1').clean
-        end
-        File.open(text_output_for(src), 'w') do |out|
-          out.write premailer.to_plain_text
-        end
+    end
+    
+    def write_output(src)
+      html = @premailer.to_inline_css
+      File.open(output_for(src), 'w') do |out|
+        out.write config.use_html_tidy? ? TidyFFI::Tidy.new(html, config.html_tidy).clean : html
+      end
+      File.open(text_output_for(src), 'w') do |out|
+        out.write @premailer.to_plain_text
       end
     end
     

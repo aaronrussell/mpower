@@ -7,13 +7,18 @@ module Mpower::Commands
 
 # mpower config options
 mpower:
-  source_path:  "source"
-  output_path:  "output"
-  assets_path:  "images"
+  source_path:    "source"
+  output_path:    "output"
+  assets_path:    "images"
+  use_tidy_html:  true
 
 # Premailer config options
 premailer:
-  # base_url:     "http://google.com/"
+  # base_url:       "http://google.com/"
+
+# HTML Tidy options
+html_tidy:
+  char_encoding:  "latin1"
 
 EOS
     
@@ -22,7 +27,7 @@ EOS
   "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-type" content="text/html; charset=iso-8859-1">
   <title>{{project_name}}.html</title>
   <style type="text/css" media="screen">
     body { margin:0; padding:0; }
@@ -31,7 +36,6 @@ EOS
   </style>
 </head>
 <body>
-  
   
 </body>
 </html>
@@ -48,7 +52,7 @@ EOS
       @html_file ||= File.join(source_path, "#{project_name}.html")
     end
     
-    protected
+    private
     
     def create_project_directory
       if File.exist? project_path

@@ -5,6 +5,7 @@ module Mpower::Commands
   class Watch < Mpower::Commands::Base
     
     def run
+      Mpower::Commands::Compile.new project_path
       puts "Watching for changes in '#{source_path}'..."
       FSSM.monitor(source_path) do |path|
         path.glob '**/*.*'
