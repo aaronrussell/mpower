@@ -27,6 +27,4 @@ If you're feeling brave, feel free to download this repo and start playing, but 
 
 ## Copyright
 
-Copyright (c) 2011 Aaron Russell. See LICENSE.txt for
-further details.
-
+Copyright (c) 2011 Aaron Russell. See LICENSE.txt for further details.

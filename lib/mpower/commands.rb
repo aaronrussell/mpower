@@ -31,7 +31,3 @@ module Mpower::Commands
   end
   
 end
-
-%w(build compile watch).each do |lib|
-  require File.join(File.dirname(__FILE__), 'commands', lib)
-end
