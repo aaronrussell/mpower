@@ -16,7 +16,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/aaronrussell/mpower"
   gem.license = "MIT"
   gem.summary = "mpower is a small HTML email generation framework"
-  gem.description = "mpower is a small HTML email generation framework"
+  gem.description = "mpower is a small HTML email generation framework with a simple aim. To make the laborious task of creating and styling HTML emails, a little bit less of a complete pain in the backside."
   gem.email = "aaron@gc4.co.uk"
   gem.authors = ["Aaron Russell"]
   gem.files = Dir.glob('lib/**/*.rb')
@@ -27,6 +27,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_runtime_dependency 'slop'
   gem.add_runtime_dependency 'erubis'
   gem.add_runtime_dependency 'fssm'
+  gem.add_runtime_dependency 'tidy_ffi'
   #  gem.add_development_dependency 'rspec', '> 1.2.3'
 end
 Jeweler::RubygemsDotOrgTasks.new
