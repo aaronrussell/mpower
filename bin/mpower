@@ -1,7 +1,24 @@
 #!/usr/bin/env ruby
 # The mpower command line utility
 
-require 'mpower'
-require 'mpower/exec'
+# This allows mpower to be run from a git checkout without install
+def fallback_load_path(path)
+  retried = false
+  begin
+    yield
+  rescue LoadError
+    unless retried
+      $: << path
+      retried = true
+      retry
+    end
+    raise
+  end
+end
+
+fallback_load_path(File.join(File.dirname(__FILE__), '..', 'lib')) do
+  require 'mpower'
+  require 'mpower/exec'
+end
 
 Mpower::Exec.new

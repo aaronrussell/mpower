@@ -1,6 +1,6 @@
 # mpower
 
-mpower is a small HTML email generation framework. Inspired by command-line utilities such as [compass](http://compass-style.org) and [nanoc](http://nanoc.stoneship.org/), has a simple aim. To make the laborious task of creating and styling HTML emails, a little bit less of a complete pain in the backside.
+mpower is a small HTML email generation framework. Inspired by command-line utilities such as [compass](http://compass-style.org) and [nanoc](http://nanoc.stoneship.org/), mpower has a simple aim. To make the laborious task of creating and styling HTML emails, a little bit less of a complete pain in the backside.
 
 mpower currently boasts the following features:
 
